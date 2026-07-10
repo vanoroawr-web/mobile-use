@@ -3,3 +3,4 @@ from mobile_use.agents.agent_react import ReActAgent
 from mobile_use.agents.agent_qwen import QwenAgent
 from mobile_use.agents.multi_agent import MultiAgent
 from mobile_use.agents.hierarchical_agent import HierarchicalAgent
+from mobile_use.agents.color_mobile_agent import ColorMobileAgent

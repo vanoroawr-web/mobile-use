@@ -21,6 +21,7 @@ The user inputs the task description on the Web interface, and the agent automat
 
 
 ## 🎉 News
+- **[2026/07/10]**: We released [ColorGUI-32B](https://huggingface.co/MadeAgents/ColorGUI-32B) and adapted it to the lightweight ColorMobileAgent framework in MobileUse. See the [ColorMobileAgent guide](docs/color_mobile_agent.md) for usage and architecture details.
 - **[2025/10/22]**: Our [techniqual report](https://arxiv.org/abs/2510.19386), **ColorAgent: Building A Robust, Personalized, and Interactive OS Agent**, now is released! The code is updated to support the agentic framework for both ColorAgent and MobileUse.
 - **[2025/09/19]**: [MobileUse](https://arxiv.org/abs/2507.16853) is accepted by The Thirty-ninth Annual Conference on Neural Information Processing Systems (NeurIPS 2025)!
 - **[2025/09/10]**: We achieved 75% success rate on the AndroidWorld benchmark, ranking first among all screenshot-only solutions! The updated code will be released soon.

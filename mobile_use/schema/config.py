@@ -43,6 +43,11 @@ class SubAgentConfig(BaseConfig):
 class PlannerConfig(SubAgentConfig):
     pass
 
+class AppRetrieverConfig(SubAgentConfig):
+    chunk_size: int = 40
+    max_apps: int = 30
+    max_workers: int = 5
+
 class KnowledgeConfig(BaseConfig):
     embedding_model_path: str = None
     knowledge_database_dir: str = None
@@ -136,3 +141,28 @@ class HierarchicalAgentConfig(MultiAgentConfig):
     task_rewriter: Optional[SubAgentConfig] = None
     enable_hierarchical_planning: bool = True
 
+
+class ColorMobileAgentConfig(AgentConfig):
+    app_retriever: Optional[AppRetrieverConfig] = AppRetrieverConfig(
+        enabled=True,
+        prompt_config="color_mobile_app_retriever.yaml",
+        chunk_size=40,
+        max_apps=30,
+        max_workers=5,
+    )
+    planner: Optional[PlannerConfig] = PlannerConfig(
+        enabled=True,
+        prompt_config="color_mobile_planner.yaml",
+    )
+    operator: OperatorConfig = OperatorConfig(
+        enabled=True,
+        name="Operator",
+        prompt_config="color_mobile_operator.yaml",
+        num_histories=10,
+        max_pixels=1024 * 1024,
+    )
+    max_action_retry: int = 3
+    memory_max_history_steps: int = 10
+    memory_compress_every_steps: int = 2
+    memory_recent_steps_after_compress: int = 2
+    memory_prompt_config: str = "color_mobile_memory.yaml"

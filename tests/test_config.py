@@ -15,6 +15,7 @@ from mobile_use.schema.config import (
     MobileEnvConfig,
     VLMConfig,
     SubAgentConfig,
+    AppRetrieverConfig,
     PlannerConfig,
     KnowledgeConfig,
     OperatorConfig,
@@ -29,6 +30,7 @@ from mobile_use.schema.config import (
     QwenAgentConfig,
     MultiAgentConfig,
     HierarchicalAgentConfig,
+    ColorMobileAgentConfig,
 )
 
 
@@ -167,6 +169,14 @@ class TestSubAgentConfig:
         config = PlannerConfig(enabled=True)
         assert config.enabled is True
 
+    def test_app_retriever_config(self):
+        """Test AppRetrieverConfig defaults."""
+        config = AppRetrieverConfig(enabled=True)
+        assert config.enabled is True
+        assert config.chunk_size == 40
+        assert config.max_apps == 30
+        assert config.max_workers == 5
+
     def test_reflector_config(self):
         """Test ReflectorConfig."""
         config = ReflectorConfig(enabled=True)
@@ -213,6 +223,31 @@ class TestOperatorConfig:
         config = OperatorConfig(enabled=True, knowledge=knowledge)
         assert config.knowledge is not None
         assert config.knowledge.embedding_model_path == "/path"
+
+
+class TestColorMobileAgentConfig:
+    """Tests for ColorMobileAgentConfig."""
+
+    def test_default_values(self):
+        config = ColorMobileAgentConfig(
+            vlm=VLMConfig(model_name="test", api_key="key", base_url="url")
+        )
+        assert config.app_retriever.enabled is True
+        assert config.app_retriever.prompt_config == "color_mobile_app_retriever.yaml"
+        assert config.app_retriever.chunk_size == 40
+        assert config.app_retriever.max_apps == 30
+        assert config.app_retriever.max_workers == 5
+        assert config.planner.enabled is True
+        assert config.planner.prompt_config == "color_mobile_planner.yaml"
+        assert config.operator.enabled is True
+        assert config.operator.name == "Operator"
+        assert config.operator.prompt_config == "color_mobile_operator.yaml"
+        assert config.operator.max_pixels == 1024 * 1024
+        assert config.max_action_retry == 3
+        assert config.memory_max_history_steps == 10
+        assert config.memory_compress_every_steps == 2
+        assert config.memory_recent_steps_after_compress == 2
+        assert config.memory_prompt_config == "color_mobile_memory.yaml"
 
 
 class TestAnswerAgentConfig:
@@ -513,4 +548,3 @@ logprob_threshold: -0.05
         assert config.trajectory_reflector.evoke_every_steps == 3
         assert config.reflect_on_demand is True
         assert config.logprob_threshold == -0.05
-

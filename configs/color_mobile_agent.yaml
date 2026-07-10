@@ -1,0 +1,51 @@
+# Compact ColorMobileAgent configuration.
+# Choose the `ColorMobileAgent` type to use it.
+# '''
+# import mobile_use
+# agent = mobile_use.Agent.from_params(dict(
+#       type="ColorMobileAgent",
+#       config_path="configs/color_mobile_agent.yaml",
+# ))
+# '''
+
+vlm:
+  model_name: ColorGUI-32B
+  api_key: xxxxx
+  base_url: xxxxx
+  max_tokens: 1024
+  temperature: 0
+
+env:
+  # Use `adb devices` to find the serial number of your Android device.
+  serial_no: xxxxx
+  go_home: true
+
+max_steps: 20
+enable_log: true
+log_dir: logs
+
+planner:
+  enabled: true
+  prompt_config: color_mobile_planner.yaml
+
+app_retriever:
+  enabled: true
+  prompt_config: color_mobile_app_retriever.yaml
+  chunk_size: 40
+  max_apps: 30
+  max_workers: 5
+
+operator:
+  enabled: true
+  name: Operator
+  prompt_config: color_mobile_operator.yaml
+  num_histories: 10
+  include_device_time: true
+  include_tips: true
+  max_pixels: 1048576
+
+max_action_retry: 3
+memory_max_history_steps: 10
+memory_compress_every_steps: 2
+memory_recent_steps_after_compress: 2
+memory_prompt_config: color_mobile_memory.yaml

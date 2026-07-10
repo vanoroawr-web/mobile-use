@@ -17,6 +17,7 @@ https://github.com/user-attachments/assets/5c4d3ce8-0135-4e6e-b003-b20f81f834d4
 **⚠️特别提醒**：操作动作由智能体自主决定，可能存在不可控的操作风险，建议体验是时刻关注手机动态如遇到操作风险及时终止任务或者使用测试手机进行体验，避免误操作带来问题。
 
 ## 🎉 News
+- **[2026/07/10]**: 我们发布了 [ColorGUI-32B](https://huggingface.co/MadeAgents/ColorGUI-32B)，并已适配 MobileUse 中的轻量版 ColorMobileAgent 框架。使用方式和整体架构可参考 [ColorMobileAgent 文档](color_mobile_agent.md)。
 - **[2025/10/22]**: 我们的[技术报告](https://arxiv.org/abs/2510.19386) **ColorAgent: Building A Robust, Personalized, and Interactive OS Agent** 已发布！代码已更新，同时支持 ColorAgent 与 MobileUse 的智能体框架。
 - **[2025/09/19]**: 我们的[论文](https://arxiv.org/abs/2507.16853) "MobileUse: A Hierarchical Reflection-Driven GUI Agent for Autonomous Mobile Operation" 已被 NeurIPS 2025 接收！
 - **[2025/09/10]**: 我们在 AndroidWorld 评测集上取得了 75% 的成功率，在所有纯截图方案中位列第一！更新后的代码将很快发布。
