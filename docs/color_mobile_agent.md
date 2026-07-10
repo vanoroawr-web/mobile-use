@@ -249,4 +249,3 @@ agent.run("帮我用美团找附近咖啡店")
 - Planner should see only retrieved app candidates.
 - Operator action coordinates are always based on 999x999.
 - The same model endpoint can be used for AppRetriever, Planner, Operator, and Memory.
-- Adjust `tensor-parallel-size` in the serving command based on the number of available GPUs.
