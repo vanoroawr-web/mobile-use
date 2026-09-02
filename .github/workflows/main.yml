@@ -1,4 +1,4 @@
-name: Build Android APK Manually
+name: Build Android APK Auto-Detect
 
 on:
   workflow_dispatch:
@@ -17,23 +17,38 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # Mencari gradlew secara otomatis di semua sub-folder dan memberikan izin
-      - name: Grant Execute Permission for Gradlew
+      - name: Find and Prepare Gradle
         run: |
+          # Cari file gradlew di seluruh repositori
           GRADLEW_PATH=$(find . -name gradlew | head -n 1)
+          
           if [ -z "$GRADLEW_PATH" ]; then
-            echo "ERROR: File gradlew benar-benar tidak ditemukan di repositori ini!"
-            exit 1
+            echo "File gradlew tidak ditemukan. Mencari folder Android untuk membuat wrapper baru..."
+            # Cari folder yang berisi file build.gradle
+            GRADLE_DIR=$(find . -name build.gradle | head -n 1 | xargs dirname)
+            if [ -z "$GRADLE_DIR" ] || [ "$GRADLE_DIR" = "." ]; then
+              echo "Membuat Gradle wrapper di root folder..."
+              gradle wrapper --gradle-version 8.2
+              GRADLEW_PATH="./gradlew"
+            else
+              echo "Membuat Gradle wrapper di folder: $GRADLE_DIR"
+              cd "$GRADLE_DIR"
+              gradle wrapper --gradle-version 8.2
+              GRADLEW_PATH="./gradlew"
+              cd -
+            fi
           fi
-          echo "Gradlew ditemukan di: $GRADLEW_PATH"
+          
+          # Berikan izin eksekusi pada gradlew
           chmod +x "$GRADLEW_PATH"
+          echo "GRADLEW_FINAL_PATH=$GRADLEW_PATH" >> $GITHUB_ENV
           echo "GRADLEW_DIR=$(dirname "$GRADLEW_PATH")" >> $GITHUB_ENV
 
-      # Menjalankan build di folder tempat gradlew berada
       - name: Build Debug APK
         run: |
           cd ${{ env.GRADLEW_DIR }}
-          ./gradlew assembleDebug
+          # Ambil nama file gradlew (bisa ./gradlew atau gradlew tergantung posisi)
+          ./$(basename ${{ env.GRADLEW_FINAL_PATH }}) assembleDebug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
