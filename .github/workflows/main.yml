@@ -1,7 +1,7 @@
 name: Build Android APK Manually
 
 on:
-  workflow_dispatch: # Fitur ini memunculkan tombol "Run Workflow" manual
+  workflow_dispatch:
 
 jobs:
   build:
@@ -11,12 +11,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      # Menggunakan setup-java v4 dengan JDK 17 (paling standar untuk Android modern)
       - name: Set up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: gradle
 
       - name: Grant Execute Permission for Gradlew
         run: chmod +x gradlew
